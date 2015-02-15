@@ -1,0 +1,3 @@
+-e git+https://github.com/pysal/pysal.git#egg=pysal
+
+ # test requirements

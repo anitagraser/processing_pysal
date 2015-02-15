@@ -1,0 +1,20 @@
+[general]
+name=PySAL for Processing
+description=PySAL Processing provider
+about=
+category=Plugins
+version=0.1.0
+qgisMinimumVersion=2.6
+
+icon=icons/prepair.png
+tags=analysis,processing
+
+author=Anita Graser, Victor Olaya
+email=anitagraser@gmx.at, volayaf@gmail.com
+
+homepage=
+tracker=
+repository=
+
+experimental=True
+deprecated=False
