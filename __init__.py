@@ -1,4 +1,4 @@
-from pysal import pysalProviderPlugin
+from pysalplugin import pysalProviderPlugin
 
 
 def classFactory(iface):
