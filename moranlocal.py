@@ -9,7 +9,7 @@ from processing.core.parameters import *
 from processing.core.outputs import *
 from processing.tools import dataobjects
 
-class LocalMoran(GeoAlgorithm):
+class MoranLocal(GeoAlgorithm):
 
     INPUT = 'INPUT'
     FIELD = 'FIELD'
