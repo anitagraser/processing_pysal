@@ -1,5 +1,3 @@
-
-
 import pysal 
 import numpy as np
 import processing 
@@ -23,11 +21,11 @@ class LocalMoran(GeoAlgorithm):
         self.name = "Local Moran's"
         self.group = 'Spatial statistics'
 
-##input=vector
-##field=field input
-##contiguity=string queen
-##morans_output=output vector
-##p_sim=output string 
+        ##input=vector
+        ##field=field input
+        ##contiguity=string queen
+        ##morans_output=output vector
+        ##p_sim=output string 
 
         self.addParameter(ParameterVector(self.INPUT,
             self.tr('Input layer'), [ParameterVector.VECTOR_TYPE_POLYGON]))
