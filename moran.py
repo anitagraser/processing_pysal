@@ -40,15 +40,13 @@ class Moran(GeoAlgorithm):
         filename = self.getParameterValue(self.INPUT)
         layer = dataobjects.getObjectFromUri(filename)
         filename = dataobjects.exportVectorLayer(layer)        
-        #provider = layer.dataProvider()
-        #fields = provider.fields()
         
         contiguity = self.getParameterValue(self.CONTIGUITY)
         if contiguity == 0: # queen
-            print 'INFO: Local Moran\'s using queen contiguity'
+            print 'INFO: Moran\'s using queen contiguity'
             w=pysal.queen_from_shapefile(filename)
         else: # 1 for rook
-            print 'INFO: Local Moran\'s using rook contiguity'
+            print 'INFO: Moran\'s using rook contiguity'
             w=pysal.rook_from_shapefile(filename)
     
         f = pysal.open(pysal.examples.get_path(filename.replace('.shp','.dbf')))
