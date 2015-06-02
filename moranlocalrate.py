@@ -20,7 +20,7 @@ class MoranLocalRate(GeoAlgorithm):
     
     def defineCharacteristics(self):
         self.name = "Local Moran's for rates"
-        self.group = 'Spatial statistics'
+        self.group = 'Exploratory Spatial Data Analysis'
         
         ##input=vector
         ##variable_field=field input
