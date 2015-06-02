@@ -1,7 +1,8 @@
 from processing.core.AlgorithmProvider import AlgorithmProvider
-from moranlocal import MoranLocal
 from moran import Moran
 from moranrate import MoranRate
+from moranlocal import MoranLocal
+from moranlocalrate import MoranLocalRate
 
 class pysalProvider(AlgorithmProvider):
 
@@ -10,7 +11,8 @@ class pysalProvider(AlgorithmProvider):
 
         self.activate = False
 
-        self.alglist = [MoranLocal(),Moran(),MoranRate()]
+        self.alglist = [Moran(),MoranRate(),
+                        MoranLocal(),MoranLocalRate()]
         for alg in self.alglist:
             alg.provider = self
 
