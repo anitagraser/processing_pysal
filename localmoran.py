@@ -30,11 +30,11 @@ class LocalMoran(GeoAlgorithm):
 ##p_sim=output string 
 
         self.addParameter(ParameterVector(self.INPUT,
-            self.tr('Input layer'), [ParameterVector.VECTOR_TYPE_ANY]))
+            self.tr('Input layer'), [ParameterVector.VECTOR_TYPE_POLYGON]))
         self.addParameter(ParameterTableField(self.FIELD,
             self.tr('Field'), self.INPUT))
-        self.addParameter(ParameterString(self.CONTIGUITY,
-            self.tr('Contiguity'), "queen"))
+        self.addParameter(ParameterSelection(self.CONTIGUITY,
+            self.tr('Contiguity'), ["queen","rook"]))
 
         self.addOutput(OutputVector(self.OUTPUT, self.tr('Result')))
         self.addOutput(OutputString(self.P_SIM, self.tr('p_sim')))
