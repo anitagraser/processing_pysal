@@ -56,10 +56,10 @@ class GLocal(GeoAlgorithm):
         contiguity = self.getParameterValue(self.CONTIGUITY)
         if self.CONTIGUITY_OPTIONS[contiguity] == 'queen':
             print 'INFO: Local G and G* using queen contiguity'
-            w=pysal.queen_from_shapefile(filename)
+            w = pysal.queen_from_shapefile(filename)
         elif self.CONTIGUITY_OPTIONS[contiguity] == 'rook':
             print 'INFO: Local G and G* using rook contiguity'
-            w=pysal.rook_from_shapefile(filename)
+            w = pysal.rook_from_shapefile(filename)
 
         significance_level = self.getParameterValue(self.SIGNIFICANCE_LEVEL)
         if self.SIGNIFICANCE_OPTIONS[significance_level] == '90%':
@@ -71,7 +71,7 @@ class GLocal(GeoAlgorithm):
         print 'INFO: significance level ' + self.SIGNIFICANCE_OPTIONS[significance_level]
 
         f = pysal.open(pysal.examples.get_path(filename.replace('.shp','.dbf')))
-        y=np.array(f.by_col[str(field)])
+        y = np.array(f.by_col[str(field)])
         lg = pysal.G_Local(y,w,transform = "b", permutations = 999) 
 
         sig_g =  1.0 * lg.p_sim <= max_p

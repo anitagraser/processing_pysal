@@ -57,10 +57,10 @@ class MoranLocal(GeoAlgorithm):
         contiguity = self.getParameterValue(self.CONTIGUITY)
         if self.CONTIGUITY_OPTIONS[contiguity] == 'queen':
             print 'INFO: Local Moran\'s using queen contiguity'
-            w=pysal.queen_from_shapefile(filename)
+            w = pysal.queen_from_shapefile(filename)
         elif self.CONTIGUITY_OPTIONS[contiguity] == 'rook':
             print 'INFO: Local Moran\'s using rook contiguity'
-            w=pysal.rook_from_shapefile(filename)
+            w = pysal.rook_from_shapefile(filename)
 
         significance_level = self.getParameterValue(self.SIGNIFICANCE_LEVEL)
         if self.SIGNIFICANCE_OPTIONS[significance_level] == '90%':
@@ -72,8 +72,8 @@ class MoranLocal(GeoAlgorithm):
         print 'INFO: significance level ' + self.SIGNIFICANCE_OPTIONS[significance_level]
 
         f = pysal.open(pysal.examples.get_path(filename.replace('.shp','.dbf')))
-        y=np.array(f.by_col[str(field)])
-        lm = pysal.Moran_Local(y,w,transformation = "r", permutations = 999)
+        y = np.array(f.by_col[str(field)])
+        lm = pysal.Moran_Local(y, w, transformation = "r", permutations = 999)
 
         # http://pysal.readthedocs.org/en/latest/library/esda/moran.html?highlight=local%20moran#pysal.esda.moran.Moran_Local
         # values indicate quadrat location 1 HH,  2 LH,  3 LL,  4 HL

@@ -41,13 +41,13 @@ class Moran(GeoAlgorithm):
         contiguity = self.getParameterValue(self.CONTIGUITY)
         if self.CONTIGUITY_OPTIONS[contiguity] == 'queen':
             print 'INFO: Moran\'s using queen contiguity'
-            w=pysal.queen_from_shapefile(filename)
+            w = pysal.queen_from_shapefile(filename)
         elif self.CONTIGUITY_OPTIONS[contiguity] == 'rook':
             print 'INFO: Moran\'s using rook contiguity'
-            w=pysal.rook_from_shapefile(filename)
+            w = pysal.rook_from_shapefile(filename)
     
         f = pysal.open(pysal.examples.get_path(filename.replace('.shp','.dbf')))
-        y=np.array(f.by_col[str(field)])
+        y = np.array(f.by_col[str(field)])
         m = pysal.Moran(y,w,transformation = "r", permutations = 999)
 
         self.setOutputValue(self.I,m.I)

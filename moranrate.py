@@ -43,15 +43,15 @@ class MoranRate(GeoAlgorithm):
         contiguity = self.getParameterValue(self.CONTIGUITY)
         if self.CONTIGUITY_OPTIONS[contiguity] == 'queen':
             print 'INFO: Moran\'s for rates using queen contiguity'
-            w=pysal.queen_from_shapefile(filename)
+            w = pysal.queen_from_shapefile(filename)
         elif self.CONTIGUITY_OPTIONS[contiguity] == 'rook':
             print 'INFO: Moran\'s for rates using rook contiguity'
-            w=pysal.rook_from_shapefile(filename)
+            w = pysal.rook_from_shapefile(filename)
             
         f = pysal.open(pysal.examples.get_path(filename.replace('.shp','.dbf')))
-        y=np.array(f.by_col[str(variable_field)])
-        population=np.array(f.by_col[str(population_field)])
-        m = pysal.esda.moran.Moran_Rate(y,population,w,transformation = "r", permutations = 999)
+        y = np.array(f.by_col[str(variable_field)])
+        population = np.array(f.by_col[str(population_field)])
+        m = pysal.esda.moran.Moran_Rate(y, population, w, transformation = "r", permutations = 999)
 
         print "Moran's I: %f" % (m.I)
         print "INFO: Moran's I values range from -1 (indicating perfect dispersion) to +1 (perfect correlation). Values close to -1/(n-1) indicate a random spatial pattern."
