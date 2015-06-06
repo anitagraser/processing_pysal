@@ -17,16 +17,14 @@ class MoranLocalRate(GeoAlgorithm):
     OUTPUT = 'OUTPUT'
     CONTIGUITY = 'CONTIGUITY'
     P_SIM = 'P_SIM'
+    SIGNIFICANCE_LEVEL = 'SIGNIFICANCE_LEVEL'
+    
+    CONTIGUITY_OPTIONS = ["queen","rook"]
+    SIGNIFICANCE_OPTIONS = ["90%","95%","99%"]
     
     def defineCharacteristics(self):
         self.name = "Local Moran's for rates"
         self.group = 'Exploratory Spatial Data Analysis'
-        
-        ##input=vector
-        ##variable_field=field input
-        ##population_field=field input
-        ##contiguity=selection queen;rook
-        ##morans_output=output vector
         
         self.addParameter(ParameterVector(self.INPUT,
             self.tr('Input layer'), [ParameterVector.VECTOR_TYPE_POLYGON]))
@@ -35,9 +33,11 @@ class MoranLocalRate(GeoAlgorithm):
         self.addParameter(ParameterTableField(self.POPULATION_FIELD,
             self.tr('Population field'), self.INPUT))
         self.addParameter(ParameterSelection(self.CONTIGUITY,
-            self.tr('Contiguity'), ["queen","rook"]))    
+            self.tr('Contiguity'), self.CONTIGUITY_OPTIONS))    
+        self.addParameter(ParameterSelection(self.SIGNIFICANCE_LEVEL,
+            self.tr('Significance level'), self.SIGNIFICANCE_OPTIONS))   
             
-        self.addOutput(OutputVector(self.OUTPUT, self.tr('Result')))
+        self.addOutput(OutputVector(self.OUTPUT, self.tr('Local Moran\' for rates')))
         self.addOutput(OutputString(self.P_SIM, self.tr('p_sim')))
 
     def processAlgorithm(self, progress):
@@ -52,22 +52,30 @@ class MoranLocalRate(GeoAlgorithm):
         fields = provider.fields()
         fields.append(QgsField('MORANS_P', QVariant.Double))
         fields.append(QgsField('MORANS_Z', QVariant.Double))
-        fields.append(QgsField('MORANS_Q', QVariant.Int))
+        fields.append(QgsField('MORANS_Q', QVariant.Int)) # quadrant
+        fields.append(QgsField('SIGN_MO_Q', QVariant.Int)) # significant quadrant
         fields.append(QgsField('MORANS_I', QVariant.Double))
-        fields.append(QgsField('MORANS_C', QVariant.Double))
 
         writer = self.getOutputFromName(self.OUTPUT).getVectorWriter(
             fields, provider.geometryType(), layer.crs() )
-
-
+            
         contiguity = self.getParameterValue(self.CONTIGUITY)
-        if contiguity == 'queen':
+        if self.CONTIGUITY_OPTIONS[contiguity] == 'queen':
             print 'INFO: Local Moran\'s for rates using queen contiguity'
             w=pysal.queen_from_shapefile(filename)
-        else:
+        elif self.CONTIGUITY_OPTIONS[contiguity] == 'rook':
             print 'INFO: Local Moran\'s for rates using rook contiguity'
             w=pysal.rook_from_shapefile(filename)
 
+        significance_level = self.getParameterValue(self.SIGNIFICANCE_LEVEL)
+        if self.SIGNIFICANCE_OPTIONS[significance_level] == '90%':
+            max_p = 0.10
+        elif self.SIGNIFICANCE_OPTIONS[significance_level] == '95%':
+            max_p = 0.05
+        elif self.SIGNIFICANCE_OPTIONS[significance_level] == '99%':
+            max_p = 0.01    
+        print 'INFO: significance level ' + self.SIGNIFICANCE_OPTIONS[significance_level]
+            
         f = pysal.open(pysal.examples.get_path(filename.replace('.shp','.dbf')))
         y=np.array(f.by_col[str(variable_field)])
         population=np.array(f.by_col[str(population_field)])
@@ -91,7 +99,7 @@ class MoranLocalRate(GeoAlgorithm):
 
         self.setOutputValue(self.P_SIM, str(lm.p_sim))
         
-        sig_q = lm.q * (lm.p_sim <= 0.01) # could make significance level an option
+        sig_q = lm.q * (lm.p_sim <= max_p) 
         outFeat = QgsFeature()
         i = 0
         for inFeat in processing.features(layer):
@@ -101,8 +109,8 @@ class MoranLocalRate(GeoAlgorithm):
             attrs.append(float(lm.p_sim[i]))
             attrs.append(float(lm.z_sim[i]))
             attrs.append(int(lm.q[i]))
-            attrs.append(float(lm.Is[i]))
             attrs.append(int(sig_q[i]))
+            attrs.append(float(lm.Is[i]))
             outFeat.setAttributes(attrs)
             writer.addFeature(outFeat)
             i+=1

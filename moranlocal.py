@@ -16,29 +16,28 @@ class MoranLocal(GeoAlgorithm):
     OUTPUT = 'OUTPUT'
     CONTIGUITY = 'CONTIGUITY'
     P_SIM = 'P_SIM'
+    SIGNIFICANCE_LEVEL = 'SIGNIFICANCE_LEVEL'
+    
+    CONTIGUITY_OPTIONS = ["queen","rook"]
+    SIGNIFICANCE_OPTIONS = ["90%","95%","99%"]
 
     def defineCharacteristics(self):
         self.name = "Local Moran's"
         self.group = 'Exploratory Spatial Data Analysis'
-
-        ##input=vector
-        ##field=field input
-        ##contiguity=string queen
-        ##morans_output=output vector
-        ##p_sim=output string 
 
         self.addParameter(ParameterVector(self.INPUT,
             self.tr('Input layer'), [ParameterVector.VECTOR_TYPE_POLYGON]))
         self.addParameter(ParameterTableField(self.FIELD,
             self.tr('Field'), self.INPUT))
         self.addParameter(ParameterSelection(self.CONTIGUITY,
-            self.tr('Contiguity'), ["queen","rook"]))
+            self.tr('Contiguity'), self.CONTIGUITY_OPTIONS))
+        self.addParameter(ParameterSelection(self.SIGNIFICANCE_LEVEL,
+            self.tr('Significance level'), self.SIGNIFICANCE_OPTIONS))   
 
-        self.addOutput(OutputVector(self.OUTPUT, self.tr('Result')))
+        self.addOutput(OutputVector(self.OUTPUT, self.tr('Local Moran\'s')))
         self.addOutput(OutputString(self.P_SIM, self.tr('p_sim')))
 
     def processAlgorithm(self, progress):
-
         field = self.getParameterValue(self.FIELD)
         field = field[0:10] # try to handle Shapefile field length limit
         filename = self.getParameterValue(self.INPUT)
@@ -48,20 +47,29 @@ class MoranLocal(GeoAlgorithm):
         fields = provider.fields()
         fields.append(QgsField('MORANS_P', QVariant.Double))
         fields.append(QgsField('MORANS_Z', QVariant.Double))
-        fields.append(QgsField('MORANS_Q', QVariant.Int))
+        fields.append(QgsField('MORANS_Q', QVariant.Int)) # quadrant
+        fields.append(QgsField('SIGN_MO_Q', QVariant.Int)) # significant quadrant
         fields.append(QgsField('MORANS_I', QVariant.Double))
-        fields.append(QgsField('MORANS_C', QVariant.Double))
 
         writer = self.getOutputFromName(self.OUTPUT).getVectorWriter(
             fields, provider.geometryType(), layer.crs() )
 
         contiguity = self.getParameterValue(self.CONTIGUITY)
-        if contiguity == 'queen':
+        if self.CONTIGUITY_OPTIONS[contiguity] == 'queen':
             print 'INFO: Local Moran\'s using queen contiguity'
             w=pysal.queen_from_shapefile(filename)
-        else:
+        elif self.CONTIGUITY_OPTIONS[contiguity] == 'rook':
             print 'INFO: Local Moran\'s using rook contiguity'
             w=pysal.rook_from_shapefile(filename)
+
+        significance_level = self.getParameterValue(self.SIGNIFICANCE_LEVEL)
+        if self.SIGNIFICANCE_OPTIONS[significance_level] == '90%':
+            max_p = 0.10
+        elif self.SIGNIFICANCE_OPTIONS[significance_level] == '95%':
+            max_p = 0.05
+        elif self.SIGNIFICANCE_OPTIONS[significance_level] == '99%':
+            max_p = 0.01    
+        print 'INFO: significance level ' + self.SIGNIFICANCE_OPTIONS[significance_level]
 
         f = pysal.open(pysal.examples.get_path(filename.replace('.shp','.dbf')))
         y=np.array(f.by_col[str(field)])
@@ -85,7 +93,7 @@ class MoranLocal(GeoAlgorithm):
 
         self.setOutputValue(self.P_SIM, str(lm.p_sim))
 
-        sig_q = lm.q * (lm.p_sim <= 0.01) # could make significance level an option
+        sig_q = lm.q * (lm.p_sim <= max_p) 
         outFeat = QgsFeature()
         i = 0
         for inFeat in processing.features(layer):
@@ -95,8 +103,8 @@ class MoranLocal(GeoAlgorithm):
             attrs.append(float(lm.p_sim[i]))
             attrs.append(float(lm.z_sim[i]))
             attrs.append(int(lm.q[i]))
-            attrs.append(float(lm.Is[i]))
             attrs.append(int(sig_q[i]))
+            attrs.append(float(lm.Is[i]))
             outFeat.setAttributes(attrs)
             writer.addFeature(outFeat)
             i+=1

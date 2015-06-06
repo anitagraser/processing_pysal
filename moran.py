@@ -15,15 +15,12 @@ class Moran(GeoAlgorithm):
     FIELD = 'FIELD'
     CONTIGUITY = 'CONTIGUITY'
     I = 'I'
+    
+    CONTIGUITY_OPTIONS = ["queen","rook"]
 
     def defineCharacteristics(self):
         self.name = "Moran's"
         self.group = 'Exploratory Spatial Data Analysis'
-
-        ##input=vector
-        ##field=field input
-        ##contiguity=selection queen;rook
-        ##i=output number 
 
         self.addParameter(ParameterVector(self.INPUT,
             self.tr('Input layer'), [ParameterVector.VECTOR_TYPE_POLYGON]))
@@ -42,10 +39,10 @@ class Moran(GeoAlgorithm):
         filename = dataobjects.exportVectorLayer(layer)        
         
         contiguity = self.getParameterValue(self.CONTIGUITY)
-        if contiguity == 0: # queen
+        if self.CONTIGUITY_OPTIONS[contiguity] == 'queen':
             print 'INFO: Moran\'s using queen contiguity'
             w=pysal.queen_from_shapefile(filename)
-        else: # 1 for rook
+        elif self.CONTIGUITY_OPTIONS[contiguity] == 'rook':
             print 'INFO: Moran\'s using rook contiguity'
             w=pysal.rook_from_shapefile(filename)
     
