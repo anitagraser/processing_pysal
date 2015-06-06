@@ -48,7 +48,7 @@ class MoranLocal(GeoAlgorithm):
         fields.append(QgsField('MORANS_P', QVariant.Double))
         fields.append(QgsField('MORANS_Z', QVariant.Double))
         fields.append(QgsField('MORANS_Q', QVariant.Int)) # quadrant
-        fields.append(QgsField('SIGN_MO_Q', QVariant.Int)) # significant quadrant
+        fields.append(QgsField('MORANS_Q_S', QVariant.Int)) # significant quadrant
         fields.append(QgsField('MORANS_I', QVariant.Double))
 
         writer = self.getOutputFromName(self.OUTPUT).getVectorWriter(

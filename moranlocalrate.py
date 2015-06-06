@@ -37,7 +37,7 @@ class MoranLocalRate(GeoAlgorithm):
         self.addParameter(ParameterSelection(self.SIGNIFICANCE_LEVEL,
             self.tr('Significance level'), self.SIGNIFICANCE_OPTIONS))   
             
-        self.addOutput(OutputVector(self.OUTPUT, self.tr('Local Moran\' for rates')))
+        self.addOutput(OutputVector(self.OUTPUT, self.tr('Local Moran\'s for rates')))
         self.addOutput(OutputString(self.P_SIM, self.tr('p_sim')))
 
     def processAlgorithm(self, progress):
@@ -53,7 +53,7 @@ class MoranLocalRate(GeoAlgorithm):
         fields.append(QgsField('MORANS_P', QVariant.Double))
         fields.append(QgsField('MORANS_Z', QVariant.Double))
         fields.append(QgsField('MORANS_Q', QVariant.Int)) # quadrant
-        fields.append(QgsField('SIGN_MO_Q', QVariant.Int)) # significant quadrant
+        fields.append(QgsField('MORANS_Q_S', QVariant.Int)) # significant quadrant
         fields.append(QgsField('MORANS_I', QVariant.Double))
 
         writer = self.getOutputFromName(self.OUTPUT).getVectorWriter(

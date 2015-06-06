@@ -1,5 +1,5 @@
 <!DOCTYPE qgis PUBLIC 'http://mrcc.com/qgis.dtd' 'SYSTEM'>
-<qgis version="2.9.0-Master" minimumScale="-4.65661e-10" maximumScale="1e+08" simplifyDrawingHints="0" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" simplifyMaxScale="1" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
+<qgis version="2.9.0-Master" minimumScale="0" maximumScale="1e+08" simplifyDrawingHints="0" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" simplifyMaxScale="1" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
   <edittypes>
     <edittype widgetv2type="TextEdit" name="BEZNR">
       <widgetv2config IsMultiline="0" fieldEditable="1" UseHtml="0" labelOnTop="0"/>
@@ -85,7 +85,7 @@
     <edittype widgetv2type="TextEdit" name="MORANS_Q">
       <widgetv2config IsMultiline="0" fieldEditable="1" UseHtml="0" labelOnTop="0"/>
     </edittype>
-    <edittype widgetv2type="TextEdit" name="SIGN_MO_Q">
+    <edittype widgetv2type="TextEdit" name="MORANS_Q_S">
       <widgetv2config IsMultiline="0" fieldEditable="1" UseHtml="0" labelOnTop="0"/>
     </edittype>
     <edittype widgetv2type="TextEdit" name="MORANS_I">
@@ -95,10 +95,10 @@
   <renderer-v2 symbollevels="0" type="RuleRenderer">
     <rules key="{29f08794-ee8d-4ce7-b62f-da7c04c9e469}">
       <rule key="{563336fb-45ad-4fe5-88b3-e0ffa58e1920}" symbol="0" label="not significant"/>
-      <rule filter=" &quot;SIGN_MO_Q&quot;  =  1" key="{dc337b45-2ce7-43b7-8bfa-5cf77536b0a9}" symbol="1" label="HH"/>
-      <rule filter=" &quot;SIGN_MO_Q&quot;  =  2" key="{db8085e4-0f22-4d83-9586-70c743a9a3d5}" symbol="2" label="LH"/>
-      <rule filter=" &quot;SIGN_MO_Q&quot;  =  3" key="{bf8f751a-1706-4f26-a9cc-9b87e949660d}" symbol="3" label="LL"/>
-      <rule filter=" &quot;SIGN_MO_Q&quot;  =  4" key="{fe943fa1-d154-48b6-959f-641ee790318f}" symbol="4" label="HL"/>
+      <rule filter=" &quot;MORANS_Q_S&quot;  =  1" key="{dc337b45-2ce7-43b7-8bfa-5cf77536b0a9}" symbol="1" label="HH"/>
+      <rule filter=" &quot;MORANS_Q_S&quot;  =  2" key="{db8085e4-0f22-4d83-9586-70c743a9a3d5}" symbol="2" label="LH"/>
+      <rule filter=" &quot;MORANS_Q_S&quot;  =  3" key="{bf8f751a-1706-4f26-a9cc-9b87e949660d}" symbol="3" label="LL"/>
+      <rule filter=" &quot;MORANS_Q_S&quot;  =  4" key="{fe943fa1-d154-48b6-959f-641ee790318f}" symbol="4" label="HL"/>
     </rules>
     <symbols>
       <symbol alpha="1" clip_to_extent="1" type="fill" name="0">
@@ -395,9 +395,7 @@
     <selectedonly on=""/>
   </labelattributes>
   <SingleCategoryDiagramRenderer diagramType="Pie">
-    <DiagramCategory penColor="#000000" labelPlacementMethod="XHeight" penWidth="0" diagramOrientation="Up" minimumSize="0" barWidth="5" penAlpha="255" maxScaleDenominator="1e+08" font="MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0" backgroundColor="#ffffff" transparency="0" width="15" scaleDependency="Area" backgroundAlpha="255" angleOffset="1440" scaleBasedVisibility="0" enabled="0" height="15" sizeType="MM" minScaleDenominator="-4.65661e-10">
-      <attribute field="" color="#000000" label=""/>
-    </DiagramCategory>
+    <DiagramCategory penColor="#000000" labelPlacementMethod="XHeight" penWidth="0" diagramOrientation="Up" minimumSize="0" barWidth="5" penAlpha="255" maxScaleDenominator="1e+08" font="MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0" backgroundColor="#ffffff" transparency="0" width="15" scaleDependency="Area" backgroundAlpha="255" angleOffset="1440" scaleBasedVisibility="0" enabled="0" height="15" sizeType="MM" minScaleDenominator="0"/>
   </SingleCategoryDiagramRenderer>
   <DiagramLayerSettings yPosColumn="-1" linePlacementFlags="10" placement="0" dist="0" xPosColumn="-1" priority="0" obstacle="0" showAll="1"/>
   <editform>../../../../OSGeo4W/bin</editform>
