@@ -3,6 +3,7 @@ from moran import Moran
 from moranrate import MoranRate
 from moranlocal import MoranLocal
 from moranlocalrate import MoranLocalRate
+from getisordg import G
 from getisordglocal import GLocal
 
 class pysalProvider(AlgorithmProvider):
@@ -12,9 +13,9 @@ class pysalProvider(AlgorithmProvider):
 
         self.activate = False
 
-        self.alglist = [Moran(),MoranRate(),
-                        MoranLocal(),MoranLocalRate(),
-                        GLocal()]
+        self.alglist = [Moran(), MoranRate(),
+                        MoranLocal(), MoranLocalRate(),
+                        G(), GLocal()]
         for alg in self.alglist:
             alg.provider = self
 
