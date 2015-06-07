@@ -63,3 +63,8 @@ class MoranRate(GeoAlgorithm):
         print "z_rand: %f" % (m.z_rand)
         print "z_sim: %f" % (m.z_sim)
         print "INFO: z values greater than 1.96 or smaller than -1.96 indicate spatial autocorrelation that is significant at the 5% level."
+
+    def help(self):
+        path = os.path.dirname(os.path.abspath(__file__))
+        helpUrl = os.path.join(path,"help","moranrate.html")
+        return False, helpUrl

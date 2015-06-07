@@ -15,7 +15,6 @@ class GLocal(GeoAlgorithm):
     FIELD = 'FIELD'
     OUTPUT = 'OUTPUT'
     CONTIGUITY = 'CONTIGUITY'
-    P_SIM = 'P_SIM'
     SIGNIFICANCE_LEVEL = 'SIGNIFICANCE_LEVEL'
     
     CONTIGUITY_OPTIONS = ["queen","rook"]
@@ -35,7 +34,6 @@ class GLocal(GeoAlgorithm):
             self.tr('Significance level'), self.SIGNIFICANCE_OPTIONS))   
 
         self.addOutput(OutputVector(self.OUTPUT, self.tr('Local G and G*')))
-        self.addOutput(OutputString(self.P_SIM, self.tr('p_sim')))
 
     def processAlgorithm(self, progress):
         field = self.getParameterValue(self.FIELD)
@@ -92,3 +90,8 @@ class GLocal(GeoAlgorithm):
             i+=1
 
         del writer
+
+    def help(self):
+        path = os.path.dirname(os.path.abspath(__file__))
+        helpUrl = os.path.join(path,"help","getisordglocal.html")
+        return False, helpUrl        

@@ -1,0 +1,94 @@
+<html>
+<head>
+<style type="text/css">
+table {
+    border-collapse: collapse;
+}
+table, th, td {
+   border: 1px solid #ccc;
+}
+</style>
+</head>
+<body>
+
+<h1>Local Moran's I</h1>
+
+<p>Local Moran's I measures local autocorrelation quantitatively which results in n values of local spatial autocorrelation, one for each spatial unit.</p>
+
+<p>Online docs: <a href="http://pysal.readthedocs.org/en/latest/users/tutorials/autocorrelation.html#local-moran-s-i">http://pysal.readthedocs.org/en/latest/users/tutorials/autocorrelation.html#local-moran-s-i</a></p>
+
+<h2>Inputs</h2>
+
+<h3>Input</h3>
+
+<p>The polygon vector layer which should be analyzed.</p>
+
+<h3>Field</h3>
+
+<p>The field of the input layer which contains the values which should be analyized for clusters.</p>
+
+<h3>Contiguity</h3>
+
+<p>Define if queen or rook contiguity should be used to compute the weights.</p>
+
+<h3>Significance level</h3>
+
+<p>Select the significance level necessary for the output cluster to be identified as significant</p>
+
+<h2>Outputs</h2>
+
+<h3>Local Moran's</h3>
+
+<p>The script outputs a polygon vector layer containing the original input features but appended by p-values MORAN_P and scatter plot quadrants</p>
+
+<p>MORAN_Q values indicate quadrat location 1 HH,  2 LH,  3 LL,  4 HL (<a href="http://github.com/pysal/pysal/blob/master/pysal/esda/moran.py">http://github.com/pysal/pysal/blob/master/pysal/esda/moran.py</a>)</p>
+
+<table>
+<tr>
+<td>category</td>
+<td>scatter plot quadrant</td>
+<td>autocorrelation</td>
+<td>interpretation</td>
+</tr><tr>
+<td>high-high</td>
+<td>upper right (red)</td>
+<td>positive cluster</td>
+<td>I'm high and my neighbors are high</td>
+</tr><tr>
+<td>high-low</td>
+<td>lower right (pink)</td>
+<td>negative outlier</td>
+<td>I'm a high outlier among low neighbors</td>
+</tr><tr>
+<td>low-low</td>
+<td>lower left (med. blue)</td>
+<td>positive cluster</td>
+<td>I'm low and my neighbors are low</td>
+</tr><tr>
+<td>low-high</td>
+<td>upper left (light blue)</td>
+<td>negative outlier</td>
+<td>I'm a low outlier among high neighbors</td>
+</tr>
+</table>
+
+<p><a href="http://www.biomedware.com/files/documentation/spacestat/Statistics/LM/Results/Interpreting_univariate_Local_Moran_statistics.htm">http://www.biomedware.com/files/documentation/spacestat/Statistics/LM/Results/Interpreting_univariate_Local_Moran_statistics.htm</a></p>
+
+<h3>p_sim</h3>
+
+<p>String representation of the numpy array of resulting p-values for further usage in other Processing tools</p>
+
+<h2>Algorithm creator</h2>
+
+<p>Anita Graser</p>
+
+<h2>Algorithm version</h2>
+
+<p>1.0</p>
+
+<h2>Help creator</h2>
+
+<p>Anita Graser</p>
+
+</body>
+</html>

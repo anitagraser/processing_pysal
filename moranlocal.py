@@ -110,3 +110,8 @@ class MoranLocal(GeoAlgorithm):
             i+=1
 
         del writer
+
+    def help(self):
+        path = os.path.dirname(os.path.abspath(__file__))
+        helpUrl = os.path.join(path,"help","moranlocal.html")
+        return False, helpUrl        

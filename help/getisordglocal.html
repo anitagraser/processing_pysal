@@ -1,0 +1,58 @@
+<html>
+<head>
+<style type="text/css">
+table {
+    border-collapse: collapse;
+}
+table, th, td {
+   border: 1px solid #ccc;
+}
+</style>
+</head>
+<body>
+
+<h1>Local G and G*</h1>
+
+<p>Getis-Ord local spatial association statistics.</p>
+
+<p>Online docs: <a href="http://pysal.readthedocs.org/en/latest/users/tutorials/autocorrelation.html#local-g-and-g">http://pysal.readthedocs.org/en/latest/users/tutorials/autocorrelation.html#local-g-and-g</a></p>
+
+<h2>Inputs</h2>
+
+<h3>Input</h3>
+
+<p>The polygon vector layer which should be analyzed.</p>
+
+<h3>Field</h3>
+
+<p>Attribute that will be tested for spatial association.</p>
+
+<h3>Contiguity</h3>
+
+<p>Define if queen or rook contiguity should be used to compute the weights.</p>
+
+<h2>Outputs</h2>
+
+<h3>Local G and G*</h3>
+
+<p>The script outputs a polygon vector layer containing the original input features but appended by additional derived attributes:</p>
+
+<ul><li> L_G, the local statistics </li>
+<li>L_G_P psuedo-pvalues for each of the local statistics, </li>
+<li>L_G_S binary indicator as to whether statistic is significant, </li>
+<li>L_G_LL_HH indicator variable 0=not sigificant, 1=signficant low-low clustering, 2=significant HH clustering</li></ul>
+
+<h2>Algorithm creator</h2>
+
+<p>Sergio Rey, Anita Graser</p>
+
+<h2>Algorithm version</h2>
+
+<p>1.0</p>
+
+<h2>Help creator</h2>
+
+<p>Sergio Rey, Anita Graser</p>
+
+</body>
+</html>

@@ -60,3 +60,8 @@ class G(GeoAlgorithm):
         print "z_norm: %f" % (g.z_norm)
         print "z_sim: %f" % (g.z_sim)
         print "INFO: z values greater than 1.96 or smaller than -1.96 indicate spatial autocorrelation that is significant at the 5% level."
+
+    def help(self):
+        path = os.path.dirname(os.path.abspath(__file__))
+        helpUrl = os.path.join(path,"help","getisordg.html")
+        return False, helpUrl        
